@@ -1,0 +1,7 @@
+RoyalChat WhatsApp-style UI
+
+1. Replace index.html and style.css in your WORKING RoyalChat project.
+2. KEEP your current working app.js and SQL, including Supabase keys.
+3. Hard refresh both browser tabs (Ctrl+Shift+R).
+4. This is visual styling only, not WhatsApp encryption, calling, or official branding.
+5. If you choose to replace app.js from this archive, paste your existing Supabase URL and publishable key again.

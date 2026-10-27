@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#075e54">
+  <title>RoyalChat Web — WhatsApp-style Messenger</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="welcome" class="welcome">
+    <form id="authForm" class="join-card">
+      <div class="brand-logo">R</div>
+      <h1>Welcome to RoyalChat</h1>
+      <p>Message privately from your browser.</p>
+      <div class="auth-tabs">
+        <button type="button" class="selected" id="loginTab">Log in</button>
+        <button type="button" id="signupTab">Create account</button>
+      </div>
+      <label id="nameLabel" class="hidden" for="nameInput">Display name (unique)</label>
+      <input id="nameInput" class="hidden" placeholder="e.g. Arman" maxlength="40" autocomplete="nickname">
+      <label for="emailInput">Email address</label>
+      <input id="emailInput" type="email" required autocomplete="email" placeholder="you@example.com">
+      <label for="passwordInput">Password (at least 6 characters)</label>
+      <input id="passwordInput" type="password" minlength="6" required autocomplete="current-password" placeholder="Your password">
+      <button id="joinBtn" type="submit">Log in</button>
+      <small id="joinError" role="alert"></small>
+      <small class="note">Private conversations. Log in to continue your chats.</small>
+    </form>
+  </section>
+
+  <div id="app" class="app hidden">
+    <nav class="rail" aria-label="Main navigation">
+      <div class="rail-top"><div class="rail-brand">R</div>
+        <span class="rail-icon chosen" title="Chats" aria-label="Chats">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.7 0-3.2-.5-4.5-1.3L3 20l1.3-4A8.5 8.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13h5"/></svg>
+        </span>
+      </div>
+      <div class="rail-bottom"><span class="rail-dot" title="Your profile">●</span><span id="railAvatar" class="rail-user">R</span></div>
+    </nav>
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <h1>Chats</h1>
+        <div class="sidebar-actions"><button id="refreshBtn" class="icon-btn" title="Refresh contacts" aria-label="Refresh contacts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6 9a7 7 0 0 1 12-2l2 5M4 12l2 5a7 7 0 0 0 12-2"/></svg>
+        </button><button id="leaveBtn" class="icon-btn" title="Log out" aria-label="Log out">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></svg>
+        </button></div>
+      </header>
+      <div class="sidebar-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><input id="userSearch" placeholder="Search or start a new chat" aria-label="Search contacts"></div>
+      <div class="filter-row"><span class="filter-chip selected">All</span></div>
+      
+      <div id="people" class="people"></div>
+      <footer class="sidebar-me"><span id="myAvatar" class="avatar">?</span><div class="profile-info"><b id="myName"></b><small>Your account</small></div><span class="profile-more" title="Your profile">•••</span></footer>
+    </aside>
+    <main class="chat-panel">
+      <div id="emptyState" class="empty-state"><div class="empty-graphic"><svg viewBox="0 0 210 180" fill="none"><rect x="32" y="31" width="145" height="109" rx="17" fill="#DBE7FF"/><rect x="47" y="46" width="115" height="78" rx="12" fill="white"/><circle cx="76" cy="70" r="12" fill="#4169E1" opacity=".75"/><path d="M97 67h46M97 78h33M64 100h79" stroke="#9DB5EE" stroke-width="7" stroke-linecap="round"/><circle cx="162" cy="129" r="29" fill="#4169E1"/><path d="m150 129 9 9 17-19" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h2>RoyalChat Web</h2><p>Select a conversation to start messaging.</p><span>Messages are stored securely in your account. They are not end-to-end encrypted.</span></div>
+      <div id="conversation" class="conversation hidden"><header class="chat-header"><button id="backBtn" class="icon-btn back-btn" aria-label="Back to chats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg></button><span id="friendAvatar" class="avatar friend-avatar">?</span><div class="friend-details"><b id="friendName"></b><small id="liveStatus">Connecting...</small></div><div class="chat-header-actions"><span class="header-search" title="Conversation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></span><span class="header-menu">⋮</span></div></header><div id="messages" class="messages" aria-live="polite"></div><form id="sendForm" class="send-form"><span class="composer-decoration" aria-hidden="true">☺</span><input id="messageInput" maxlength="2000" required autocomplete="off" placeholder="Type a message" aria-label="Message"><button id="sendBtn" aria-label="Send message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button></form></div>
+      <div id="toast" role="alert"></div>
+    </main>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
